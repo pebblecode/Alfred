@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="LightBlue">
-        <Image Source="{Binding Path=Source}" Stretch="UniformToFill" />
+        <Image Source="{Binding Path=Source}" Stretch="Uniform" />
     </Grid>
 </Page>
