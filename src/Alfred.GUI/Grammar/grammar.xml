@@ -29,10 +29,10 @@
         today I shall work from <ruleref uri="#locationRule" /> <tag> out=rules.latest(); </tag>
       </item>
       <item>
-        I am sick today <tag> out="Sick"; </tag>
+        today I shall be sick <tag> out="Sick"; </tag>
       </item>
       <item>
-        I am on holiday today <tag> out="Holiday"; </tag>
+        today I shall be on holiday <tag> out="Holiday"; </tag>
       </item>
     </one-of>
   </rule>

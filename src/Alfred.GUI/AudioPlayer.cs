@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Windows.Media.SpeechSynthesis;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -13,7 +8,18 @@ namespace Alfred.GUI
 {
     public static class AudioPlayer
     {
-        public static async Task PlayAudio(string text)
+
+        public static async void PlayAudio(string text)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal,
+                () =>
+                {
+                    _PlayAudio(text);
+                });
+        }
+
+        private static async void _PlayAudio(string text)
         {
             MediaElement mediaElement = new MediaElement();
             SpeechSynthesizer synth = new SpeechSynthesizer();

@@ -95,35 +95,36 @@ namespace Alfred.GUI
                 case ("Sick"):
                 {
                     Debug.WriteLine("You are sick!");
-                    await Task.WhenAll(WfhApi.SetStatus(WfhStatus.Sick), AudioPlayer.PlayAudio("Sorry to hear that, sir"));
-                   break;
+                    await WfhApi.SetStatus(WfhStatus.Sick);
+                    AudioPlayer.PlayAudio("Sorry to hear that, sir");
+                    break;
                 }
                 case ("Holiday"):
                 {
                     Debug.WriteLine("You are on holiday today!");
-                    Task.Run(() => WfhApi.SetStatus(WfhStatus.Holiday));
-                        Task.Run(() => AudioPlayer.PlayAudio("Lucky you, sir!"));
-                        break;
+                    await WfhApi.SetStatus(WfhStatus.Holiday);
+                    AudioPlayer.PlayAudio("Lucky you, sir!");
+                    break;
                 }
                 case ("Home"):
                 {
                     Debug.WriteLine("You are working from home today!");
-                    Task.Run(() => WfhApi.SetStatus(WfhStatus.OutOfOffice));
-                        Task.Run(() => AudioPlayer.PlayAudio("I'll bring you some tea, sir"));
-                        break;
+                    await WfhApi.SetStatus(WfhStatus.OutOfOffice);
+                    AudioPlayer.PlayAudio("I'll bring you some tea, sir");
+                    break;
                 }
                 case ("Office"):
                 {
                     Debug.WriteLine("You are working from office today!");
-                    Task.Run(() => WfhApi.SetStatus(WfhStatus.InOffice));
-                    Task.Run(() => AudioPlayer.PlayAudio("Jolly good, sir"));
-                        break;
+                    await WfhApi.SetStatus(WfhStatus.InOffice);
+                    AudioPlayer.PlayAudio("Jolly good, sir");
+                    break;
                 }
                 default:
                 {
                     Debug.WriteLine("You are something else");
-                        Task.Run(() => AudioPlayer.PlayAudio("I'm sorry, sir, what was that?"));
-                        break;
+                    Task.Run(() => AudioPlayer.PlayAudio("I'm sorry, sir, what was that?"));
+                    break;
                 }
             }
         }
