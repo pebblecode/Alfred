@@ -26,13 +26,24 @@
   <rule id="commandActions">
     <one-of>
       <item>
-        I shall work from <ruleref uri="#locationRule" /> today <tag> out="Work"; </tag>
+        today I shall work from <ruleref uri="#locationRule" /> <tag> out="Work"; </tag>
       </item>
       <item>
         I am sick today <tag> out="Sick"; </tag>
       </item>
       <item>
         I am on holiday today <tag> out="Holiday"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="locationRule">
+    <one-of>
+      <item>
+        home <tag> out="Home"; </tag>
+      </item>
+      <item>
+        office <tag> out="Office"; </tag>
       </item>
     </one-of>
   </rule>
