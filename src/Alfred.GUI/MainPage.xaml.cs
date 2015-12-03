@@ -21,7 +21,7 @@ namespace Alfred.GUI
     {
         // Grammer File
         private const string SRGS_FILE = "Grammar\\grammar.xml";
-        private MainPageModel _model;
+        private readonly MainPageModel _model;
 
         private SpeechRecognizer _recognizer;
 
@@ -110,49 +110,45 @@ namespace Alfred.GUI
                 case ("Sick"):
                 {
                     await WfhApi.SetStatus(WfhStatus.Sick);
-                    AudioPlayer.PlayAudio("Sorry to hear that, sir");
+                    AudioPlayer.Speak("Sorry to hear that, sir");
                     await UpdateImage("Assets/ill.jpg");
                     break;
                 }
                 case ("Holiday"):
                 {
                     await WfhApi.SetStatus(WfhStatus.Holiday);
-                    AudioPlayer.PlayAudio("Lucky you, sir!");
+                    AudioPlayer.Speak("Lucky you, sir!");
                     await UpdateImage("Assets/vacation.jpg");
                     break;
                 }
                 case ("Home"):
                 {
                     await WfhApi.SetStatus(WfhStatus.OutOfOffice);
-                    AudioPlayer.PlayAudio("I'll bring you some tea, sir");
+                    AudioPlayer.Speak("I'll bring you some tea, sir");
                     await UpdateImage("Assets/tea.jpg");
                     break;
                 }
                 case ("Office"):
                 {
                     await WfhApi.SetStatus(WfhStatus.InOffice);
-                    AudioPlayer.PlayAudio("Jolly good, sir");
+                    AudioPlayer.Speak("Jolly good, sir");
                     await UpdateImage("Assets/butler.jpg");
                     break;
                 }
                 case ("Christmas"):
                 {
-                    await WfhApi.SetStatus(WfhStatus.OutOfOffice);
-                    AudioPlayer.PlayAudio("I'll bring you some tea, sir");
-                    await UpdateImage("Assets/tea.jpg");
+                    AudioPlayer.PlayAudio("Assets/JingleBells.mp3");
                     break;
                 }
                 case ("Party"):
                 {
-                    await WfhApi.SetStatus(WfhStatus.InOffice);
-                    AudioPlayer.PlayAudio("Jolly good, sir");
-                    await UpdateImage("Assets/butler.jpg");
+                    AudioPlayer.Speak("Jolly good, sir");
                     break;
                 }
                 default:
                 {
                     Debug.WriteLine("You are something else");
-                    AudioPlayer.PlayAudio("I'm sorry, sir, what was that?");
+                    AudioPlayer.Speak("I'm sorry, sir, what was that?");
                     break;
                 }
             }

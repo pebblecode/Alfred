@@ -113,9 +113,10 @@
     <None Include="Alfred.GUI_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\03 - Jinge Bells %288Bit Version%29.mp3">
+    <Content Include="Assets\JingleBells.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\03 - Jinge Bells %288Bit Version%29.wav" />
     <Content Include="Assets\butler.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
