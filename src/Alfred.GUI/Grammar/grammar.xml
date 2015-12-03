@@ -26,7 +26,7 @@
   <rule id="commandActions">
     <one-of>
       <item>
-        today I shall work from <ruleref uri="#locationRule" /> <tag> out="Work"; </tag>
+        today I shall work from <ruleref uri="#locationRule" /> <tag> out=rules.latest(); </tag>
       </item>
       <item>
         I am sick today <tag> out="Sick"; </tag>

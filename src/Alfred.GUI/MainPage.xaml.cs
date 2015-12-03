@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Windows.ApplicationModel;
@@ -18,16 +19,8 @@ namespace Alfred.GUI
     {
         // Grammer File
         private const string SRGS_FILE = "Grammar\\grammar.xml";
-        // Tag TARGET
-        private const string TAG_TARGET = "target";
-        // Tag CMD
-        private const string TAG_CMD = "cmd";
-        // Tag Device
-        private const string TAG_DEVICE = "device";
-        // On State
 
-        // Speech Recognizer
-        private SpeechRecognizer recognizer;
+        private SpeechRecognizer _recognizer;
 
         public MainPage()
         {
@@ -36,31 +29,30 @@ namespace Alfred.GUI
             Unloaded += MainPage_Unloaded;
 
             // Initialize Recognizer
-            initializeSpeechRecognizer();
-            // Initialize GPIO controller and pins
+            InitializeSpeechRecognizer();
         }
 
         // Release resources, stop recognizer, release pins, etc...
         private async void MainPage_Unloaded(object sender, object args)
         {
             // Stop recognizing
-            await recognizer.ContinuousRecognitionSession.StopAsync();
+            await _recognizer.ContinuousRecognitionSession.StopAsync();
 
             // Release pins
-            recognizer.Dispose();
+            _recognizer.Dispose();
 
-            recognizer = null;
+            _recognizer = null;
         }
 
         // Initialize Speech Recognizer and start async recognition
-        private async void initializeSpeechRecognizer()
+        private async void InitializeSpeechRecognizer()
         {
             // Initialize recognizer
-            recognizer = new SpeechRecognizer();
+            _recognizer = new SpeechRecognizer();
 
             // Set event handlers
-            recognizer.StateChanged += RecognizerStateChanged;
-            recognizer.ContinuousRecognitionSession.ResultGenerated += RecognizerResultGenerated;
+            _recognizer.StateChanged += RecognizerStateChanged;
+            _recognizer.ContinuousRecognitionSession.ResultGenerated += RecognizerResultGenerated;
 
             // Load Grammer file constraint
             string fileName = String.Format(SRGS_FILE);
@@ -69,10 +61,10 @@ namespace Alfred.GUI
             SpeechRecognitionGrammarFileConstraint grammarConstraint = new SpeechRecognitionGrammarFileConstraint(grammarContentFile);
 
             // Add to grammer constraint
-            recognizer.Constraints.Add(grammarConstraint);
+            _recognizer.Constraints.Add(grammarConstraint);
 
             // Compile grammer
-            SpeechRecognitionCompilationResult compilationResult = await recognizer.CompileConstraintsAsync();
+            SpeechRecognitionCompilationResult compilationResult = await _recognizer.CompileConstraintsAsync();
 
             Debug.WriteLine("Status: " + compilationResult.Status);
 
@@ -81,7 +73,7 @@ namespace Alfred.GUI
             {
                 Debug.WriteLine("Result: " + compilationResult);
 
-                await recognizer.ContinuousRecognitionSession.StartAsync();
+                await _recognizer.ContinuousRecognitionSession.StartAsync();
             }
             else
             {
@@ -96,17 +88,46 @@ namespace Alfred.GUI
             Debug.WriteLine(args.Result.Status);
             Debug.WriteLine(args.Result.Text);
 
-            int count = args.Result.SemanticInterpretation.Properties.Count;
-            Task.Run(() => WfhApi.SetStatus(WfhStatus.InOffice));
+            var cmd = args.Result.SemanticInterpretation.Properties["cmd"].Single();
 
-            Debug.WriteLine("Count: " + count);
-            Debug.WriteLine("Tag: " + args.Result.Constraint.Tag);
+            switch (cmd)
+            {
+                case ("Sick"):
+                {
+                    Debug.WriteLine("You are sick!");
+                    Task.Run(() => WfhApi.SetStatus(WfhStatus.Sick));
+                    break;
+                }
+                case ("Holiday"):
+                {
+                    Debug.WriteLine("You are on holiday today!");
+                    Task.Run(() => WfhApi.SetStatus(WfhStatus.Holiday));
+                    break;
+                }
+                case ("Home"):
+                {
+                    Debug.WriteLine("You are working from home today!");
+                    Task.Run(() => WfhApi.SetStatus(WfhStatus.OutOfOffice));
+                    break;
+                }
+                case ("Office"):
+                {
+                    Debug.WriteLine("You are working from office today!");
+                    Task.Run(() => WfhApi.SetStatus(WfhStatus.InOffice));
+                    break;
+                }
+                default:
+                {
+                    Debug.WriteLine("You are something else");
+                    break;
+                }
+            }
         }
 
         // Recognizer state changed
         private void RecognizerStateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)
         {
-            Debug.WriteLine("Speech recognizer state: " + args.State.ToString());
+            Debug.WriteLine("Speech recognizer state: " + args.State);
         }
     }
 }
