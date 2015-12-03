@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+
 using Windows.ApplicationModel;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
@@ -95,6 +97,7 @@ namespace Alfred.GUI
             Debug.WriteLine(args.Result.Text);
 
             int count = args.Result.SemanticInterpretation.Properties.Count;
+            Task.Run(() => WfhApi.SetStatus(WfhStatus.InOffice));
 
             Debug.WriteLine("Count: " + count);
             Debug.WriteLine("Tag: " + args.Result.Constraint.Tag);
