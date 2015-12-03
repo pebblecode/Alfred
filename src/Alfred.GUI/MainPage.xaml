@@ -9,7 +9,7 @@
 
     <Grid Background="LightBlue">
         <StackPanel>
-            <Image Source="{Binding Path=Source}" />
+            <Image Source="{Binding Path=Source}" Stretch="None" />
         </StackPanel>
     </Grid>
 </Page>
