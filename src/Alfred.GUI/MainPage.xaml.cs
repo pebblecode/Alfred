@@ -22,6 +22,7 @@ namespace Alfred.GUI
         // Grammer File
         private const string SRGS_FILE = "Grammar\\grammar.xml";
         private readonly MainPageModel _model;
+        private readonly AudioPlayer _audioPlayer = new AudioPlayer();
 
         private SpeechRecognizer _recognizer;
 
@@ -109,6 +110,7 @@ namespace Alfred.GUI
             {
                 case ("Sick"):
                 {
+                    Debug.WriteLine("You are Sick!");
                     await WfhApi.SetStatus(WfhStatus.Sick);
                     AudioPlayer.Speak("Sorry to hear that, sir");
                     await UpdateImage("Assets/ill.jpg");
@@ -116,6 +118,7 @@ namespace Alfred.GUI
                 }
                 case ("Holiday"):
                 {
+                    Debug.WriteLine("You are on holiday!");
                     await WfhApi.SetStatus(WfhStatus.Holiday);
                     AudioPlayer.Speak("Lucky you, sir!");
                     await UpdateImage("Assets/vacation.jpg");
@@ -123,6 +126,7 @@ namespace Alfred.GUI
                 }
                 case ("Home"):
                 {
+                    Debug.WriteLine("You are working from home!");
                     await WfhApi.SetStatus(WfhStatus.OutOfOffice);
                     AudioPlayer.Speak("I'll bring you some tea, sir");
                     await UpdateImage("Assets/tea.jpg");
@@ -130,6 +134,7 @@ namespace Alfred.GUI
                 }
                 case ("Office"):
                 {
+                    Debug.WriteLine("You are working at the office!");
                     await WfhApi.SetStatus(WfhStatus.InOffice);
                     AudioPlayer.Speak("Jolly good, sir");
                     await UpdateImage("Assets/butler.jpg");
@@ -137,17 +142,14 @@ namespace Alfred.GUI
                 }
                 case ("Christmas"):
                 {
+                    Debug.WriteLine("It's Christmas!");
                     await UpdateImage("Assets/christmas.jpg");
-                    AudioPlayer.PlayAudio("Assets\\JingleBells.mp3");
-                    break;
-                }
-                case ("Party"):
-                {
-                    AudioPlayer.Speak("Jolly good, sir");
+                    _audioPlayer.PlayAudio(@"\Assets\JingleBells.mp3");
                     break;
                 }
                 case ("Noise"):
-                { 
+                {
+                    _audioPlayer.StopAudio();
                     break;
                 }
                 default:
