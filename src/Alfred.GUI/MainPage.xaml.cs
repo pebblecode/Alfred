@@ -95,6 +95,7 @@ namespace Alfred.GUI
             Debug.WriteLine(args.Result.Text);
 
             int count = args.Result.SemanticInterpretation.Properties.Count;
+            WfhApi.SetStatus(WfhStatus.InOffice).Wait();
 
             Debug.WriteLine("Count: " + count);
             Debug.WriteLine("Tag: " + args.Result.Constraint.Tag);
