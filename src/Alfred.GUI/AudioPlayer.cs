@@ -31,10 +31,11 @@ namespace Alfred.GUI
                 });
         }
 
-        private static async void _PlayAudio(string text)
+        private static async void _PlayAudio(string relativePath)
         {
             var mediaElement = new MediaElement();
-            var storageFile = await StorageFile.GetFileFromPathAsync(text);
+            var path = Windows.ApplicationModel.Package.Current.InstalledLocation.Path + relativePath;
+            var storageFile = await StorageFile.GetFileFromPathAsync(path);
             var stream = await storageFile.OpenAsync(FileAccessMode.Read);
             mediaElement.SetSource(stream, storageFile.ContentType);
             mediaElement.Play();
