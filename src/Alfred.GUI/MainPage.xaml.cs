@@ -98,19 +98,6 @@ namespace Alfred.GUI
 
             Debug.WriteLine("Count: " + count);
             Debug.WriteLine("Tag: " + args.Result.Constraint.Tag);
-
-            // Check for different tags and initialize the variables
-            String target = args.Result.SemanticInterpretation.Properties.ContainsKey(TAG_TARGET) ?
-                            args.Result.SemanticInterpretation.Properties[TAG_TARGET][0].ToString() :
-                            "";
-
-            String cmd = args.Result.SemanticInterpretation.Properties.ContainsKey(TAG_CMD) ?
-                            args.Result.SemanticInterpretation.Properties[TAG_CMD][0].ToString() :
-                            "";
-
-            String device = args.Result.SemanticInterpretation.Properties.ContainsKey(TAG_DEVICE) ?
-                            args.Result.SemanticInterpretation.Properties[TAG_DEVICE][0].ToString() :
-                            "";
         }
 
         // Recognizer state changed
