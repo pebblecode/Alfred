@@ -9,8 +9,7 @@
 
     <Grid Background="LightBlue">
         <StackPanel>
-            <TextBlock>We present you Alfred</TextBlock>
-            <Image Source="Assets/tumblr_mplupednw51qmfve0o1_500.gif" />
+            <Image Source="Assets/butler.jpg" />
         </StackPanel>
     </Grid>
 </Page>
