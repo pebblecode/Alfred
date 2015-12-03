@@ -137,7 +137,8 @@ namespace Alfred.GUI
                 }
                 case ("Christmas"):
                 {
-                    AudioPlayer.PlayAudio("Assets/JingleBells.mp3");
+                    await UpdateImage("Assets/christmas.jpg");
+                    AudioPlayer.PlayAudio("Assets\\JingleBells.mp3");
                     break;
                 }
                 case ("Party"):
