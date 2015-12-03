@@ -109,7 +109,6 @@ namespace Alfred.GUI
             {
                 case ("Sick"):
                 {
-                    Debug.WriteLine("You are sick!");
                     await WfhApi.SetStatus(WfhStatus.Sick);
                     AudioPlayer.PlayAudio("Sorry to hear that, sir");
                     await UpdateImage("Assets/ill.jpg");
@@ -117,7 +116,6 @@ namespace Alfred.GUI
                 }
                 case ("Holiday"):
                 {
-                    Debug.WriteLine("You are on holiday today!");
                     await WfhApi.SetStatus(WfhStatus.Holiday);
                     AudioPlayer.PlayAudio("Lucky you, sir!");
                     await UpdateImage("Assets/vacation.jpg");
@@ -125,7 +123,6 @@ namespace Alfred.GUI
                 }
                 case ("Home"):
                 {
-                    Debug.WriteLine("You are working from home today!");
                     await WfhApi.SetStatus(WfhStatus.OutOfOffice);
                     AudioPlayer.PlayAudio("I'll bring you some tea, sir");
                     await UpdateImage("Assets/tea.jpg");
@@ -133,7 +130,20 @@ namespace Alfred.GUI
                 }
                 case ("Office"):
                 {
-                    Debug.WriteLine("You are working from office today!");
+                    await WfhApi.SetStatus(WfhStatus.InOffice);
+                    AudioPlayer.PlayAudio("Jolly good, sir");
+                    await UpdateImage("Assets/butler.jpg");
+                    break;
+                }
+                case ("Christmas"):
+                {
+                    await WfhApi.SetStatus(WfhStatus.OutOfOffice);
+                    AudioPlayer.PlayAudio("I'll bring you some tea, sir");
+                    await UpdateImage("Assets/tea.jpg");
+                    break;
+                }
+                case ("Party"):
+                {
                     await WfhApi.SetStatus(WfhStatus.InOffice);
                     AudioPlayer.PlayAudio("Jolly good, sir");
                     await UpdateImage("Assets/butler.jpg");
