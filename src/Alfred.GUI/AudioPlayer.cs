@@ -24,11 +24,6 @@ namespace Alfred.GUI
             MediaElement mediaElement = new MediaElement();
             SpeechSynthesizer synth = new SpeechSynthesizer();
 
-            foreach (VoiceInformation voice in SpeechSynthesizer.AllVoices)
-            {
-                Debug.WriteLine(voice.DisplayName + ", " + voice.Description);
-            }
-
             // Initialize a new instance of the SpeechSynthesizer.
             SpeechSynthesisStream stream = await synth.SynthesizeTextToStreamAsync(text);
 

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using Alfred.GUI.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -19,6 +21,7 @@ namespace Alfred.GUI
     {
         // Grammer File
         private const string SRGS_FILE = "Grammar\\grammar.xml";
+        private MainPageModel _model;
 
         private SpeechRecognizer _recognizer;
 
@@ -30,6 +33,8 @@ namespace Alfred.GUI
 
             // Initialize Recognizer
             InitializeSpeechRecognizer();
+            _model = new MainPageModel("Assets/butler.jpg");
+            this.DataContext = _model;
         }
 
         // Release resources, stop recognizer, release pins, etc...
@@ -81,6 +86,16 @@ namespace Alfred.GUI
             }
         }
 
+        private async Task UpdateImage(string image)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal,
+                () =>
+                {
+                    _model.Source = image;
+                });
+        }
+
         // Recognizer generated results
         private async void RecognizerResultGenerated(SpeechContinuousRecognitionSession session, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
@@ -97,6 +112,7 @@ namespace Alfred.GUI
                     Debug.WriteLine("You are sick!");
                     await WfhApi.SetStatus(WfhStatus.Sick);
                     AudioPlayer.PlayAudio("Sorry to hear that, sir");
+                    await UpdateImage("Assets/ill.jpg");
                     break;
                 }
                 case ("Holiday"):
@@ -104,6 +120,7 @@ namespace Alfred.GUI
                     Debug.WriteLine("You are on holiday today!");
                     await WfhApi.SetStatus(WfhStatus.Holiday);
                     AudioPlayer.PlayAudio("Lucky you, sir!");
+                    await UpdateImage("Assets/vacation.jpg");
                     break;
                 }
                 case ("Home"):
@@ -111,6 +128,7 @@ namespace Alfred.GUI
                     Debug.WriteLine("You are working from home today!");
                     await WfhApi.SetStatus(WfhStatus.OutOfOffice);
                     AudioPlayer.PlayAudio("I'll bring you some tea, sir");
+                    await UpdateImage("Assets/tea.jpg");
                     break;
                 }
                 case ("Office"):
@@ -118,16 +136,17 @@ namespace Alfred.GUI
                     Debug.WriteLine("You are working from office today!");
                     await WfhApi.SetStatus(WfhStatus.InOffice);
                     AudioPlayer.PlayAudio("Jolly good, sir");
+                    await UpdateImage("Assets/butler.jpg");
                     break;
                 }
                 default:
                 {
                     Debug.WriteLine("You are something else");
-                    Task.Run(() => AudioPlayer.PlayAudio("I'm sorry, sir, what was that?"));
+                    AudioPlayer.PlayAudio("I'm sorry, sir, what was that?");
                     break;
                 }
             }
-        }
+    }
 
         // Recognizer state changed
         private void RecognizerStateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)

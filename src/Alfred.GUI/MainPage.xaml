@@ -9,7 +9,7 @@
 
     <Grid Background="LightBlue">
         <StackPanel>
-            <Image Source="Assets/butler.jpg" />
+            <Image Source="{Binding Path=Source}" />
         </StackPanel>
     </Grid>
 </Page>
