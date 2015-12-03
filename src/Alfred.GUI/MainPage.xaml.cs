@@ -112,7 +112,7 @@ namespace Alfred.GUI
                 {
                     Debug.WriteLine("You are Sick!");
                     await WfhApi.SetStatus(WfhStatus.Sick);
-                    AudioPlayer.Speak("Sorry to hear that, sir");
+                    AudioPlayer.Speak("Sorry to hear that sir");
                     await UpdateImage("Assets/ill.jpg");
                     break;
                 }
@@ -120,7 +120,7 @@ namespace Alfred.GUI
                 {
                     Debug.WriteLine("You are on holiday!");
                     await WfhApi.SetStatus(WfhStatus.Holiday);
-                    AudioPlayer.Speak("Lucky you, sir!");
+                    AudioPlayer.Speak("Lucky you sir!");
                     await UpdateImage("Assets/vacation.jpg");
                     break;
                 }
@@ -128,7 +128,7 @@ namespace Alfred.GUI
                 {
                     Debug.WriteLine("You are working from home!");
                     await WfhApi.SetStatus(WfhStatus.OutOfOffice);
-                    AudioPlayer.Speak("I'll bring you some tea, sir");
+                    AudioPlayer.Speak("Very well I'll bring you some tea sir");
                     await UpdateImage("Assets/tea.jpg");
                     break;
                 }
@@ -136,7 +136,7 @@ namespace Alfred.GUI
                 {
                     Debug.WriteLine("You are working at the office!");
                     await WfhApi.SetStatus(WfhStatus.InOffice);
-                    AudioPlayer.Speak("Jolly good, sir");
+                    AudioPlayer.Speak("Jolly good sir");
                     await UpdateImage("Assets/butler.jpg");
                     break;
                 }
@@ -155,7 +155,7 @@ namespace Alfred.GUI
                 default:
                 {
                     Debug.WriteLine("You are something else");
-                    AudioPlayer.Speak("I'm sorry, sir, what was that?");
+                    AudioPlayer.Speak("I'm sorry sir what was that?");
                     break;
                 }
             }
