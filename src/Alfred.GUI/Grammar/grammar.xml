@@ -40,6 +40,9 @@
       <item>
         let's party! <tag> out="Party"; </tag>
       </item>
+      <item>
+        please stop that awful noise <tag> out="Noise"; </tag>
+      </item>
     </one-of>
   </rule>
 

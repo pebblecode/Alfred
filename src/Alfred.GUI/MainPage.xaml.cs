@@ -146,6 +146,10 @@ namespace Alfred.GUI
                     AudioPlayer.Speak("Jolly good, sir");
                     break;
                 }
+                case ("Noise"):
+                { 
+                    break;
+                }
                 default:
                 {
                     Debug.WriteLine("You are something else");
