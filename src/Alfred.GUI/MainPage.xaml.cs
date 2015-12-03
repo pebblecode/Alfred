@@ -82,7 +82,7 @@ namespace Alfred.GUI
         }
 
         // Recognizer generated results
-        private void RecognizerResultGenerated(SpeechContinuousRecognitionSession session, SpeechContinuousRecognitionResultGeneratedEventArgs args)
+        private async void RecognizerResultGenerated(SpeechContinuousRecognitionSession session, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
             // Output debug strings
             Debug.WriteLine(args.Result.Status);
@@ -95,31 +95,35 @@ namespace Alfred.GUI
                 case ("Sick"):
                 {
                     Debug.WriteLine("You are sick!");
-                    Task.Run(() => WfhApi.SetStatus(WfhStatus.Sick));
-                    break;
+                    await Task.WhenAll(WfhApi.SetStatus(WfhStatus.Sick), AudioPlayer.PlayAudio("Sorry to hear that, sir"));
+                   break;
                 }
                 case ("Holiday"):
                 {
                     Debug.WriteLine("You are on holiday today!");
                     Task.Run(() => WfhApi.SetStatus(WfhStatus.Holiday));
-                    break;
+                        Task.Run(() => AudioPlayer.PlayAudio("Lucky you, sir!"));
+                        break;
                 }
                 case ("Home"):
                 {
                     Debug.WriteLine("You are working from home today!");
                     Task.Run(() => WfhApi.SetStatus(WfhStatus.OutOfOffice));
-                    break;
+                        Task.Run(() => AudioPlayer.PlayAudio("I'll bring you some tea, sir"));
+                        break;
                 }
                 case ("Office"):
                 {
                     Debug.WriteLine("You are working from office today!");
                     Task.Run(() => WfhApi.SetStatus(WfhStatus.InOffice));
-                    break;
+                    Task.Run(() => AudioPlayer.PlayAudio("Jolly good, sir"));
+                        break;
                 }
                 default:
                 {
                     Debug.WriteLine("You are something else");
-                    break;
+                        Task.Run(() => AudioPlayer.PlayAudio("I'm sorry, sir, what was that?"));
+                        break;
                 }
             }
         }

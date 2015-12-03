@@ -27,7 +27,7 @@ namespace Alfred.GUI
             client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
             var content = string.Format(
-                "{{ \"email\":\"saverio.castelli@pebblecode.com\", \"status\":\"{0}\" }}",
+                "{{ \"email\":\"james.gregory@pebblecode.com\", \"status\":\"{0}\" }}",
                 status.ToString());
             var result = await client.PutAsync(WfhUri, new StringContent(content, Encoding.UTF8, "application/json"));
             Debug.WriteLine(result.StatusCode);
